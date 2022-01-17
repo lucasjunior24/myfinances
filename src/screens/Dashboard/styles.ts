@@ -3,9 +3,9 @@ import styled from 'styled-components/native';
 import { getBottomSpace, getStatusBarHeight } from 'react-native-iphone-x-helper';
 
 import { Feather } from '@expo/vector-icons';
+import { FlatList } from 'react-native';
 
 import { DataListProps } from '.';
-import { FlatList } from 'react-native';
 
 export const Container = styled.View`
   flex: 1;
@@ -20,7 +20,6 @@ export const Header = styled.View`
   justify-content: center;
   align-items: flex-start;
   flex-direction: row;
-
 `;
 
 export const UserWrapper = styled.View`

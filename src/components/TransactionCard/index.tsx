@@ -27,13 +27,7 @@ interface Props {
   data: TransactionCardProps;
 }
 
-const icon = {
-  up: 'arrow-up-circle',
-  down: 'arrow-down-circle',
-  total: 'dollar-sign'
-}
-
-export function TransactionCard({data} : Props) {
+export function TransactionCard({ data } : Props) {
   return (
     <Container>
         <Title>
