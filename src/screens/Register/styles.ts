@@ -1,7 +1,5 @@
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
-
-import { Feather } from '@expo/vector-icons';
 
 export const Container = styled.View`
   flex: 1;
@@ -38,4 +36,7 @@ export const Fields = styled.View``;
 export const TransactionTypes = styled.View`
   flex-direction: row;
   justify-content: space-between;
+
+  margin-top: 8px;
+  margin-bottom: 16px;
 `;
