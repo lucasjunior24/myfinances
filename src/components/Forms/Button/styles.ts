@@ -4,29 +4,19 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import { TouchableOpacity } from 'react-native';
 
 export const Container = styled(TouchableOpacity)`
-  /* width: 100%;
-  padding: 16px 18px;
-
-  font-size: ${RFValue(14)}px;
-  font-family: ${({ theme }) => theme.fonts.regular};
-
-  color: ${({ theme }) => theme.colors.text_dark};
-  background: ${({ theme }) => theme.colors.shape};
+  width: 100%;
+  background: ${({ theme }) => theme.colors.secondary};
 
   border-radius: 5px;
-  margin-bottom: 8px; */
+  align-items: center; 
+  padding: 18px;
 `;
+
 export const Title = styled.Text`
-  /* width: 100%;
-  padding: 16px 18px;
-
   font-size: ${RFValue(14)}px;
-  font-family: ${({ theme }) => theme.fonts.regular};
+  font-family: ${({ theme }) => theme.fonts.medium};
 
-  color: ${({ theme }) => theme.colors.text_dark};
-  background: ${({ theme }) => theme.colors.shape};
-
-  border-radius: 5px;
-  margin-bottom: 8px; */
+  color: ${({ theme }) => theme.colors.shape};
 `;
+
 

@@ -6,11 +6,11 @@ import {
   Title
 } from './styles';
 
-type Props = TouchableOpacityProps {
+interface Props extends TouchableOpacityProps {
   title: string;
 }
 
-export function Button({...rest, title } : Props) {
+export function Button({ title, ...rest } : Props) {
   return (
     <Container {...rest}>
       <Title>
