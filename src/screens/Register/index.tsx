@@ -62,7 +62,7 @@ export function Register() {
     resolver: yupResolver(schema)
   });
 
-  function handleTransactionTypeSelect(type: 'up' | 'down') {
+  function handleTransactionTypeSelect(type: 'positive' | 'negative') {
     setTransactionType(type);
   }
 
@@ -78,13 +78,13 @@ export function Register() {
     if(!transactionType) return Alert.alert('Selecione o tipo da transação');
 
     if(category.key === 'category')
-    return Alert.alert('Selecione a Categorria');
+    return Alert.alert('Selecione a Categoria');
 
     const newTransaction = {
       id: String(uuid.v4()),
       name: form.name,
       amount: form.amount,
-      transactionType,
+      type: transactionType,
       category: category.key,
       date: new Date()
     }
@@ -116,18 +116,6 @@ export function Register() {
     }
   }
 
-  // useEffect(() => {
-  //   async function loadData() {
-  //     const data = await AsyncStorage.getItem(dataKey);
-  //     console.log(JSON.parse(data!));
-  //   }
-  //   loadData();
-
-  //   async function removeAll() {
-  //     await AsyncStorage.removeItem(dataKey);
-  //   }
-  //   removeAll();
-  // }, []);
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Container>
@@ -157,14 +145,14 @@ export function Register() {
               <TransactionTypeButton
                 type='up'
                 title='Income'
-                onPress={() => handleTransactionTypeSelect("up")}
-                isActive={transactionType === 'up'}
+                onPress={() => handleTransactionTypeSelect('positive')}
+                isActive={transactionType === 'positive'}
               />
               <TransactionTypeButton
                 type='down'
                 title='Outcome'
-                onPress={() => handleTransactionTypeSelect("down")}
-                isActive={transactionType === 'down'}
+                onPress={() => handleTransactionTypeSelect('negative')}
+                isActive={transactionType === 'negative'}
               />
             </TransactionTypes>
             <CategorySelectButton

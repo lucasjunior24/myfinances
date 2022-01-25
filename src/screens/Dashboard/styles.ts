@@ -97,14 +97,14 @@ export const Title = styled.Text`
   margin-bottom: 16px;
 `;
 
-export const TransactionList = styled(
-  FlatList as new () => FlatList<DataListProps>
-  ).attrs({
+export const TransacionList = styled(
+  FlatList as new () => FlatList<DataListProps>).attrs({
   showsVerticalScrollIndicator: false,
-  contentContainerStyle: {
-    paddingBottom: getBottomSpace()
-  }
+  contentContainerStyle: { paddingBottom: getBottomSpace() }
 })``;
 
-
-  
+export const LoadContainer = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+`;
