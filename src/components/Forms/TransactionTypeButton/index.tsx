@@ -24,7 +24,7 @@ export function TransactionTypeButton({
   title,
   isActive,
   ...rest 
-} : Props) {
+} : Props) : JSX.Element {
   return (
     <Container
       isActive={isActive}

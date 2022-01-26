@@ -18,7 +18,7 @@ export function InputForm({
   control, 
   name, 
   error,
-  ...rest} : Props) {
+  ...rest} : Props): JSX.Element {
   return (
     <Container>
       <Controller 

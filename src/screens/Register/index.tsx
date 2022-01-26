@@ -75,7 +75,8 @@ export function Register() {
   }
 
    async function handleRegister(form: FormData) {
-    if(!transactionType) return Alert.alert('Selecione o tipo da transação');
+    if(!transactionType) 
+      return Alert.alert('Selecione o tipo da transação');
 
     if(category.key === 'category')
     return Alert.alert('Selecione a Categoria');

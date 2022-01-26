@@ -28,7 +28,7 @@ export function HighlightCard({
   title,
   amount,
   lastTransactioin
-} : Props ) {
+} : Props ): JSX.Element {
   return (
     <Container type={type}>
       <Header>

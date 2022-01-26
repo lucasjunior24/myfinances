@@ -21,7 +21,7 @@ import {
   HighlightCards,
   Transactions,
   Title,
-  TransacionList,
+  TransactionList,
   LogoutButton,
   LoadContainer
 } from './styles';
@@ -118,7 +118,7 @@ export function Dashboard() {
         lastTransaction: `Última saida dia ${lastTransactionExpensives}` 
       },
       total: {
-        amount: expensiveTotal.toLocaleString('pt-BR', {
+        amount: total.toLocaleString('pt-BR', {
           style: 'currency',
           currency: 'BRL'
         }),
@@ -172,12 +172,12 @@ export function Dashboard() {
             lastTransactioin={highlightData.entries.lastTransaction} />
           <HighlightCard
             type='down'
-            title="Entradas" 
+            title="Saida" 
             amount={highlightData.expensives.amount}
             lastTransactioin={highlightData.expensives.lastTransaction} />
           <HighlightCard 
             type='total'
-            title="Entradas" 
+            title="Total" 
             amount={highlightData.total.amount}
             lastTransactioin={highlightData.total.lastTransaction} />
         </HighlightCards>
@@ -185,13 +185,12 @@ export function Dashboard() {
         <Transactions>
           <Title>Listagem</Title>
 
-          <TransacionList 
-            data={transactions}
-            keyExtractor={item => item.id}
-            renderItem={({ item }) => <TransactionCard data={item} />}
-          />
-        
-        </Transactions>
+          <TransactionList
+              data={transactions}
+              keyExtractor={(item: DataListProps) => String(item.id)}
+              renderItem={({ item }) => <TransactionCard data={item} />}
+            />
+          </Transactions>
       </>
     }
     </Container>
