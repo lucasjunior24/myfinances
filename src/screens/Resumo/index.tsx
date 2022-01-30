@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { HistoryCard } from '../../components/HistoryCard';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { VictoryPie } from 'victory-native';
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 
 import { categories } from '../../Utils/categories';
 
@@ -11,11 +12,16 @@ import {
   Header,
   Title,
   Content,
-  ChartContainer
+  ChartContainer,
+  MonthSelect,
+  MonthSelectButton,
+  MonthSelectIcon,
+  Month
 } from './styles';
+
+
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useTheme } from 'styled-components';
-
 
 interface TransactionData {
   type: 'positive' | 'negative';
@@ -92,13 +98,32 @@ export function Resumo() {
   useEffect(() => {
     loadData();
   }, [])
+
   return (
     <Container>
       <Header>
         <Title>Resumo por categorio</Title>
       </Header>
 
-      <Content>
+      <Content
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          paddingHorizontal: 24,
+          paddingBottom: useBottomTabBarHeight(),
+        }}
+      >
+        <MonthSelect>
+          <MonthSelectButton>
+            <MonthSelectIcon name='chevron-left' />
+          </MonthSelectButton>
+
+          <Month>Maio</Month>
+
+          <MonthSelectButton>
+            <MonthSelectIcon name='chevron-right'  />
+          </MonthSelectButton>
+        </MonthSelect>
+
         <ChartContainer>
           <VictoryPie 
             colorScale={totalByCategories.map(category => category.color)}

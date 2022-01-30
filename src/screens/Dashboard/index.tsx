@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import { ActivityIndicator } from 'react-native';
-
 import { useFocusEffect } from '@react-navigation/native';
 
 import { HighlightCard } from '../../components/HighlightCard';
