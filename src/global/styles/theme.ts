@@ -13,6 +13,17 @@ export default {
         text: '#969CB2',
         text_dark: '#000',
         background: '#F0F2F5',
+
+
+        header: '#1B1B1F',
+        background_primary: '#FAF5F6',
+        background_secondary: '#FFF',
+        text_detail: '#AEAEB3',
+        line: '#EB3BF0',
+        main: '#DC1637',
+        main_light: '#FDEDEF',
+        sucess: '#03B252',
+        shape_dark: '#29292E'
     },
     fonts: {
         regular: 'Poppins_400Regular',
