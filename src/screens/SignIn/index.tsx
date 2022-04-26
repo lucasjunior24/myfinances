@@ -83,8 +83,9 @@ export function SignIn() {
           >         
           <Header>
             <Title>
-              Estamos{'\n'} 
-              quase lá.
+              Controle suas {'\n'}
+              finanças de forma {'\n'}
+              muito simples
             </Title>
             <SubTitle>
               Faça seu login para começar{'\n'}

@@ -8,6 +8,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Dashboard } from '../screens/Dashboard';
 import { Register } from '../screens/Register';
 import { SignUpFirstStep } from '../screens/SignUp/SignUpFirstStep';
+import { SignUpSecondStep } from '../screens/SignUp/SignUpSecondStep';
 import { Resumo } from '../screens/Resumo';
 
 const { Navigator, Screen } = createBottomTabNavigator();
@@ -55,8 +56,8 @@ export function AppRoutes() {
       />
 
       <Screen 
-        name="Resumo"
-        component={Resumo}
+        name="SignUpSecondStep"
+        component={SignUpSecondStep}
         options={{
           tabBarIcon: (({ size, color }) => (
             <MaterialIcons 
@@ -69,7 +70,7 @@ export function AppRoutes() {
       />
 
       <Screen 
-        name="Login"
+        name="SignUpFirstStep"
         component={SignUpFirstStep}
         options={{
           tabBarIcon: (({ size, color }) => (
@@ -81,6 +82,7 @@ export function AppRoutes() {
           ))
         }}
       />
+      
     </Navigator>
   );
 }
