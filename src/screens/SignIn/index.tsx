@@ -25,12 +25,12 @@ import { RootStackParamList } from '../../routes/RootStackParams';
 
 import { 
   Container,
-  ContentView,
   Header,
   Title,
   SubTitle,
   Form,
-  Footer
+  Footer,
+  FooterForm
 } from './styles';
 
 export function SignIn() {
@@ -91,12 +91,7 @@ export function SignIn() {
             backgroundColor='transparent'
             translucent
           />
-          <ContentView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={{
-              paddingBottom: 25,
-            }}
-          >         
+       
           <Header>
             <Title>
               Controle suas {'\n'}
@@ -109,6 +104,8 @@ export function SignIn() {
             </SubTitle>
           </Header>
 
+          <FooterForm>
+
           <Form>
             <Input 
               iconName='mail'
@@ -118,14 +115,14 @@ export function SignIn() {
               autoCapitalize='none'
               onChangeText={setEmail}
               value={email}
-            />
+              />
 
             <PasswordInput
               iconName='lock'
               placeholder='Senha'
               onChangeText={setPassword}
               value={password}
-            />
+              />
           </Form>
 
           <Footer>
@@ -134,7 +131,7 @@ export function SignIn() {
               onPress={handleSignIn}
               enabled={true}
               loading={false}
-            /> 
+              /> 
 
             <Button 
               title='Criar conta Gratuita'
@@ -143,9 +140,10 @@ export function SignIn() {
               onPress={handleNewAccount}
               enabled={true}
               loading={false}
-            /> 
+              /> 
           </Footer>
-          </ContentView>
+              </FooterForm>
+    
         </Container>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>

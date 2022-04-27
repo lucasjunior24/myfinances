@@ -23,7 +23,7 @@ export function Button({
     const theme = useTheme();
     return (
         <Container 
-            color={color ? color : theme.colors.main} 
+            color={color ? color : theme.colors.header} 
             onPress={onPress}
             enabled={enabled}
             style={{ opacity: (enabled === false || loading === true) ? .5 : 1 }}
