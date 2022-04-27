@@ -25,6 +25,7 @@ import { RootStackParamList } from '../../routes/RootStackParams';
 
 import { 
   Container,
+  ContainerHeader,
   Header,
   Title,
   SubTitle,
@@ -89,23 +90,23 @@ export function SignIn() {
           <StatusBar 
             barStyle='dark-content'
             backgroundColor='transparent'
-            translucent
+            // translucent
           />
-       
+         <ContainerHeader>
           <Header>
-            <Title>
-              Controle suas {'\n'}
-              finanças de forma {'\n'}
-              muito simples
-            </Title>
-            <SubTitle>
-              Faça seu login para começar{'\n'}
-              Uma experiência incrível.
-            </SubTitle>
-          </Header>
-
+              <Title>
+                Controle suas {'\n'}
+                finanças de forma {'\n'}
+                muito simples
+              </Title>
+              <SubTitle>
+                Faça seu login para começar{'\n'}
+                Uma experiência incrível.
+              </SubTitle>
+            </Header>
+         </ContainerHeader>
+        
           <FooterForm>
-
           <Form>
             <Input 
               iconName='mail'

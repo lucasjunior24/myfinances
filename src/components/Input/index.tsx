@@ -37,7 +37,7 @@ export function Input({
         <Feather 
           name={iconName}
           size={24}
-          color={(isFocused || isFilled) ? theme.colors.primary : theme.colors.text_detail}
+          color={(isFocused || isFilled) ? theme.colors.secondary : theme.colors.text_detail}
         />
       </IconContainer>
       <InputText
