@@ -1,4 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import { 
   StatusBar,
   KeyboardAvoidingView,
@@ -8,6 +10,8 @@ import {
 } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp} from '@react-navigation/native-stack';
+
 import * as Yup from 'yup';
 
 import { Button } from '../../components/Button';
@@ -15,6 +19,7 @@ import { Input } from '../../components/Input';
 import { PasswordInput } from '../../components/PasswordInput';
 
 import theme from '../../global/styles/theme';
+import { RootStackParamList } from '../../routes/RootStackParams';
 
 // import { useAuth } from '../../hooks/auth';
 
@@ -32,7 +37,8 @@ export function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const navigation = useNavigation();
+  type navigationTypes = NativeStackNavigationProp<RootStackParamList, 'SignIn'>
+  const navigation = useNavigation<navigationTypes>();
   // const { signIn } = useAuth();
 
   async function handleSignIn() {
@@ -65,6 +71,16 @@ export function SignIn() {
   function handleNewAccount() {
     navigation.navigate('SignUpFirstStep');
   }
+
+  useEffect(() => {
+    async function loadData() {
+      const dataKey = '@gofinances:user_local';
+      const data = await AsyncStorage.getItem(dataKey);
+      console.log("Meus users");
+      console.log(JSON.parse(data!));
+    }
+    loadData()
+  }, []) 
   
   return (
     <KeyboardAvoidingView behavior='position' enabled >

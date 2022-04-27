@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native'
 import * as Yup from 'yup';
+import { NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 import { 
   KeyboardAvoidingView,
@@ -13,6 +14,8 @@ import { BackButton } from '../../../components/BackButton';
 import { Bullet } from '../../../components/Bullet';
 import { Input } from '../../../components/Input';
 import { Button } from '../../../components/Button';
+
+import { RootStackParamList } from '../../../routes/RootStackParams';
 
 import {
   Container,
@@ -31,7 +34,8 @@ export function SignUpFirstStep() {
   const [email, setEmail] = useState('');
   const [cpf, setCpf] = useState('');
 
-  const navigation = useNavigation();
+  type navigationTypes = NativeStackNavigationProp<RootStackParamList, 'SignUpFirstStep'>
+  const navigation = useNavigation<navigationTypes>();
 
   function handleBack() {
     navigation.goBack();
@@ -65,9 +69,6 @@ export function SignUpFirstStep() {
         <Container>
         <ContentView
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={{
-              paddingBottom: 25,
-            }}
           >      
           <Header>
             <BackButton onPress={handleBack} />

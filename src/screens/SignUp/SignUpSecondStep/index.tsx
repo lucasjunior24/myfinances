@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useNavigation, useRoute } from '@react-navigation/native'
-import { useTheme } from 'styled-components';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 import { 
   KeyboardAvoidingView,
@@ -21,6 +21,8 @@ import { Bullet } from '../../../components/Bullet';
 import { Button } from '../../../components/Forms/Button';
 import { PasswordInput } from '../../../components/PasswordInput';
 // import api  from '../../../services/api';
+
+import { RootStackParamList } from '../../../routes/RootStackParams';
 
 import {
   Container,
@@ -47,13 +49,13 @@ interface FormData {
 export function SignUpSecondStep() {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
-  
-  const navigation = useNavigation();
-  const route = useRoute();
-  const theme = useTheme();
+  const dataKey = '@gofinances:user_local';
 
+  type navigationTypes = NativeStackNavigationProp<RootStackParamList, 'SignUpSecondStep'>
+  const navigation = useNavigation<navigationTypes>();
+
+  const route = useRoute();
   const { user } = route.params as Params;
-  const {name, email, cpf} = user;
 
   function handleBack() {
     navigation.goBack();
@@ -94,7 +96,7 @@ export function SignUpSecondStep() {
     }
     console.log("Novo usuario: ", newUser);
     try {
-      const dataKey = '@gofinances:user_local';
+      
       const data = await AsyncStorage.getItem(dataKey);
       const currentData = data ? JSON.parse(data) : [];
 
@@ -106,12 +108,12 @@ export function SignUpSecondStep() {
       await AsyncStorage.setItem(dataKey, JSON.stringify(dataFormatted));
       reset();
 
-      navigation.navigate('Listagem');
-      // navigation.navigate('Confirmation', {
-      //   nextScreenRoute: 'SignIn',
-      //   title: 'Conta Criada',
-      //   message: `Agora é só fazer login\ne aproveitar`
-      // });
+      // navigation.navigate('Listagem');
+      navigation.navigate('Confirmation', {
+        nextScreenRoute: 'SignIn',
+        title: 'Conta Criada',
+        message: `Agora é só fazer login\ne aproveitar`
+      });
 
     } catch (error) {
       console.log(error);

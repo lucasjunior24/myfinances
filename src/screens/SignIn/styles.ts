@@ -13,13 +13,13 @@ export const ContentView = styled.ScrollView``;
 export const Header = styled.View`
   width: 100%;
 
-  margin-top: ${getStatusBarHeight() + 115}px;
+  margin-top: ${getStatusBarHeight() + 75}px;
 `;
 
 export const Title = styled.Text`
-  font-size: ${RFValue(40)}px;
-  font-family: ${({ theme }) => theme.fonts.medium};
-  color: ${({ theme }) => theme.colors.title};
+  font-size: ${RFValue(34)}px;
+  font-family: ${({ theme }) => theme.fonts.bold};
+  color: ${({ theme }) => theme.colors.primary};
 `;
 
 export const SubTitle = styled.Text`
