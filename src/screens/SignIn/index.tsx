@@ -70,13 +70,28 @@ export function SignIn() {
     }
   }
 
-  function signIn(email: string, password: string) {
+  async function signIn(email: string, password: string) {
     console.log("Users Cadastrados", listaDeUsers);
     const userLogado = listaDeUsers.filter(user => user.email === email && user.password === password);
 
     console.log("Meu user encontrado", userLogado);
 
     if(userLogado!) {
+
+      console.log("Novo usuario: ", userLogado);
+
+      const dataKey = '@gofinances:user_logado';
+
+      const data = await AsyncStorage.getItem(dataKey);
+      const currentData = data ? JSON.parse(data) : [];
+
+      const userLogadoFormatted = [
+        ...currentData,
+        userLogado
+      ];
+
+      await AsyncStorage.setItem(dataKey, JSON.stringify(userLogadoFormatted));
+
       navigation.navigate('AppRoutes');
     } else {
       Alert.alert(
