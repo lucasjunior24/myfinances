@@ -21,7 +21,7 @@ export const IconContainer = styled.View<Props>`
   background: ${({ theme }) => theme.colors.background_secondary};
   ${({ isFocused, theme }) => isFocused && css`
     border-bottom-width: 2px;
-    border-bottom-color: ${theme.colors.main};
+    border-bottom-color: ${theme.colors.secondary};
   `};
 `;
 
@@ -37,6 +37,6 @@ export const InputText = styled(TextInput)<Props>`
 
   ${({ isFocused, theme }) => isFocused && css`
     border-bottom-width: 2px;
-    border-bottom-color: ${theme.colors.main};
+    border-bottom-color: ${theme.colors.secondary};
   `};
 `;

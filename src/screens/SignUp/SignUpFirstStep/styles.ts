@@ -3,12 +3,10 @@ import { RFValue } from "react-native-responsive-fontsize";
 import styled from "styled-components/native";
 
 export const Container = styled.View`
-  padding: 0 24px 24px;
+  padding: 0 24px 14px;
 
   background-color: ${({ theme }) => theme.colors.background};
 `;
-
-export const ContentView = styled.ScrollView``;
 
 export const Header = styled.View`
   width: 100%;
@@ -16,7 +14,7 @@ export const Header = styled.View`
   justify-content: space-between;
   align-items: center;
 
-  margin-top: ${getStatusBarHeight() + 31}px;
+  margin-top: ${getStatusBarHeight() + 20}px;
 `;
 
 export const Steps = styled.View`
@@ -25,11 +23,11 @@ export const Steps = styled.View`
 `;
 
 export const Title = styled.Text`
-  font-size: ${RFValue(40)}px;
-  font-family: ${({ theme }) => theme.fonts.medium};
+  font-size: ${RFValue(32)}px;
+  font-family: ${({ theme }) => theme.fonts.bold};
   color: ${({ theme }) => theme.colors.title};
   
-  margin-top: 60px;
+  margin-top: 40px;
   margin-bottom: 16px;
 `;
 

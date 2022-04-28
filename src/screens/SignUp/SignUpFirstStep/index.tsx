@@ -19,7 +19,6 @@ import { RootStackParamList } from '../../../routes/RootStackParams';
 
 import {
   Container,
-  ContentView,
   Header,
   Steps,
   Title,
@@ -67,9 +66,7 @@ export function SignUpFirstStep() {
     <KeyboardAvoidingView behavior='position' enabled>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <Container>
-        <ContentView
-            showsVerticalScrollIndicator={false}
-          >      
+
           <Header>
             <BackButton onPress={handleBack} />
             <Steps>
@@ -114,7 +111,7 @@ export function SignUpFirstStep() {
             title='Proximo'
             onPress={handleNextStep}
           />
-          </ContentView >
+
         </Container>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>

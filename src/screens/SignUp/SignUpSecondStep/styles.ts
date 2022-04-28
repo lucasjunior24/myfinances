@@ -23,8 +23,8 @@ export const Steps = styled.View`
 `;
 
 export const Title = styled.Text`
-  font-size: ${RFValue(40)}px;
-  font-family: ${({ theme }) => theme.fonts.medium};
+  font-size: ${RFValue(32)}px;
+  font-family: ${({ theme }) => theme.fonts.bold};
   color: ${({ theme }) => theme.colors.title};
   
   margin-top: 60px;

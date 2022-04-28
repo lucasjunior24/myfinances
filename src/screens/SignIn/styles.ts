@@ -19,14 +19,14 @@ export const ContainerHeader = styled.View`
 export const Header = styled.View`
   width: 100%;
 
-  padding: 0 24px;
+  padding: 0 24px 14px;
 `;
 
 export const Title = styled.Text`
   align-items: center;
   justify-content: center;
   margin-top: ${getStatusBarHeight() + 10}px;
-  font-size: ${RFValue(30)}px;
+  font-size: ${RFValue(28)}px;
   font-family: ${({ theme }) => theme.fonts.bold};
   color: ${({ theme }) => theme.colors.shape};
 `;
