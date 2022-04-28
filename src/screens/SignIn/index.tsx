@@ -38,6 +38,8 @@ export function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const [listaDeUsers, setlistaDeUsers] = useState<any[]>([]);
+
   type navigationTypes = NativeStackNavigationProp<RootStackParamList, 'SignIn'>
   const navigation = useNavigation<navigationTypes>();
   // const { signIn } = useAuth();
@@ -54,8 +56,7 @@ export function SignIn() {
   
       await schema.validate({ email, password });
 
-      // signIn({ email, password });
-      Alert.alert('Tudo certo');
+      signIn(email, password);
 
     } catch (error) {
       if(error instanceof Yup.ValidationError) {
@@ -69,6 +70,22 @@ export function SignIn() {
     }
   }
 
+  function signIn(email: string, password: string) {
+    console.log("Users Cadastrados", listaDeUsers);
+    const userLogado = listaDeUsers.filter(user => user.email === email && user.password === password);
+
+    console.log("Meu user encontrado", userLogado);
+
+    if(userLogado!) {
+      navigation.navigate('AppRoutes');
+    } else {
+      Alert.alert(
+        'Erro na autenticação', 
+        'Ocorreu um erro ao fazer login, verifique as credenciais'
+      );
+    }
+  }
+
   function handleNewAccount() {
     navigation.navigate('SignUpFirstStep');
   }
@@ -77,8 +94,9 @@ export function SignIn() {
     async function loadData() {
       const dataKey = '@gofinances:user_local';
       const data = await AsyncStorage.getItem(dataKey);
-      console.log("Meus users");
-      console.log(JSON.parse(data!));
+      const listaDeUsers = JSON.parse(data!);
+
+      setlistaDeUsers(listaDeUsers);
     }
     loadData()
   }, []) 
@@ -87,12 +105,12 @@ export function SignIn() {
     <KeyboardAvoidingView behavior='position' enabled >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <Container>
-          <StatusBar 
+         <ContainerHeader>
+         <StatusBar 
             barStyle='dark-content'
             backgroundColor='transparent'
             // translucent
           />
-         <ContainerHeader>
           <Header>
               <Title>
                 Controle suas {'\n'}
@@ -104,8 +122,7 @@ export function SignIn() {
                 Uma experiência incrível.
               </SubTitle>
             </Header>
-         </ContainerHeader>
-        
+         </ContainerHeader>       
           <FooterForm>
           <Form>
             <Input 
@@ -143,8 +160,7 @@ export function SignIn() {
               loading={false}
               /> 
           </Footer>
-              </FooterForm>
-    
+          </FooterForm>
         </Container>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>

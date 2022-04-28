@@ -3,5 +3,6 @@ export type RootStackParamList = {
     SignUpFirstStep: undefined,
     SignUpSecondStep: undefined,
     Confirmation: undefined,
-    Profile: undefined
+    Profile: undefined,
+    AppRoutes: undefined
 }

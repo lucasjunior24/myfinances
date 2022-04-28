@@ -6,6 +6,8 @@ import { SignUpSecondStep } from '../screens/SignUp/SignUpSecondStep';
 import { SignIn } from '../screens/SignIn';
 import { Profile } from '../screens/Profile';
 import { Confirmation } from '../screens/Confirmation';
+import { AppRoutes } from './app.routes';
+
 
 // import { Confirmation } from '../screens/Confirmation';
 
@@ -14,7 +16,7 @@ export const Routes = () => {
 
     return (
         <Stack.Navigator
-            headerMode='none' initialRouteName='SignIn'
+            initialRouteName='SignIn'
            screenOptions={{headerShown: false}}
         >
           <Stack.Screen name="SignUpFirstStep" component={SignUpFirstStep} />
@@ -22,6 +24,7 @@ export const Routes = () => {
           <Stack.Screen name="SignUpSecondStep" component={SignUpSecondStep} />
           <Stack.Screen name="Profile" component={Profile} />
           <Stack.Screen name="Confirmation" component={Confirmation} />
+          <Stack.Screen name="AppRoutes" component={AppRoutes} />
         </Stack.Navigator>
     );
 }
