@@ -3,9 +3,13 @@ import { RFValue } from 'react-native-responsive-fontsize';
 
 import { RectButton } from 'react-native-gesture-handler';
 
-export const Container = styled(RectButton)`
+interface ButtonProps {
+  color?: string;
+}
+
+export const Container = styled(RectButton)<ButtonProps>`
   width: 100%;
-  background: ${({ theme }) => theme.colors.header};
+  background: ${({ theme }) => theme.colors.secondary};
 
   border-radius: 5px;
   align-items: center; 

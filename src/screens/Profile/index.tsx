@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTheme } from 'styled-components';
 import { useNavigation } from '@react-navigation/core';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { Feather } from '@expo/vector-icons';
-// import * as ImagePicker from 'expo-image-picker';
+import * as ImagePicker from 'expo-image-picker';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {
   StatusBar,
@@ -15,6 +16,7 @@ import {
 import { BackButton } from '../../components/BackButton';
 import { Input } from '../../components/Input';
 import { PasswordInput } from '../../components/PasswordInput';
+import { IUser } from '../../@types/interfaces/IUsers';
 
 // import { useAuth } from '../../hooks/auth';
 
@@ -42,6 +44,10 @@ export function Profile() {
   const [name, setName] = useState('');
   const [driverLicense, setDriverLicense] = useState('user.driver_license');
 
+  const [userLogadoLocal, setUserLogadoLocal] = useState<IUser>({} as IUser);
+
+  const dataKey_userLogado = '@gofinances:user_logado';
+  const dataKey_userLogadoComAvatar = '@gofinances:user_logadoComAvatar';
   const theme = useTheme();
   const navigation = useNavigation();
 
@@ -50,17 +56,92 @@ export function Profile() {
   }
 
   async function handleAvatarSelect() {
-    // const result = await ImagePicker.launchImageLibraryAsync({
-    //   mediaTypes: ImagePicker.MediaTypeOptions.Images,
-    //   allowsEditing: true,
-    //   aspect: [4, 4],
-    //   quality: 1,
-    // });
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 4],
+      quality: 1,
+    });
 
-    // if(result.cancelled) return;
-    // if(result.uri) setAvatar(result.uri);
+    if(result.cancelled) return;
+    if(result.uri) setAvatar(result.uri);
+
+    console.log("Meu AVATAR: ", avatar);
+    const response_userLogado = await AsyncStorage.getItem(dataKey_userLogado);
+    const userLogadoEmArray = response_userLogado ? JSON.parse(response_userLogado) : {} as IUser;
+
+    console.log("meus users em array: ", userLogadoEmArray);
+    const primeiroElemntoDoArray: IUser = userLogadoEmArray[0][0];
+
+
+    const newUser: IUser = {
+      id: primeiroElemntoDoArray.id,
+      name: primeiroElemntoDoArray.name,
+      email: primeiroElemntoDoArray.email,
+      cpf: primeiroElemntoDoArray.cpf,
+      password: primeiroElemntoDoArray.password,
+      date: primeiroElemntoDoArray.date,
+      avatar: avatar
+    }
+    console.log("Usuario EDITADO: ", newUser);
+
+      const data = await AsyncStorage.getItem(dataKey_userLogado);
+      const currentData = data ? JSON.parse(data) : [];
+
+      const dataFormatted = [
+        ...currentData,
+        newUser
+      ];
+
+      await AsyncStorage.setItem(dataKey_userLogado, JSON.stringify(dataFormatted));
+      setUserLogadoLocal(primeiroElemntoDoArray);
   }
 
+  async function getUserLogado() {
+    console.log("Meu AVATAR: ", avatar);
+    
+    const response_userLogado = await AsyncStorage.getItem(dataKey_userLogado);
+    const userLogadoEmArray = response_userLogado ? JSON.parse(response_userLogado) : {} as IUser;
+
+    console.log("meus users em array: ", userLogadoEmArray);
+    const primeiroElemntoDoArray: IUser = userLogadoEmArray[0][0];
+
+
+    const newUser: IUser = {
+      id: primeiroElemntoDoArray.id,
+      name: primeiroElemntoDoArray.name,
+      email: primeiroElemntoDoArray.email,
+      cpf: primeiroElemntoDoArray.cpf,
+      password: primeiroElemntoDoArray.password,
+      date: primeiroElemntoDoArray.date,
+      avatar: avatar
+    }
+    console.log("Usuario EDITADO: ", newUser);
+
+    // AsyncStorage.removeItem(dataKey_userLogado);
+
+    AsyncStorage.removeItem(dataKey_userLogadoComAvatar);
+    
+    const data = await AsyncStorage.getItem(dataKey_userLogadoComAvatar);
+    const currentData = data ? JSON.parse(data) : [];
+
+    const dataFormatted = [
+      ...currentData,
+      newUser
+    ];
+  
+    await AsyncStorage.setItem(dataKey_userLogadoComAvatar, JSON.stringify(dataFormatted));
+    setUserLogadoLocal(newUser);
+    
+    const primeiroElemntoDoArrayComAvatar: IUser = dataFormatted[0];
+    console.log("Usuario com avarta local 2: ", primeiroElemntoDoArrayComAvatar);
+  }
+  useEffect(() => {
+    getUserLogado();
+
+    // const dataKey = '@gofinances:transactions';
+    // AsyncStorage.removeItem(dataKey);
+  }, []);
   function handleSingOut() {
     navigation.goBack();
   }
