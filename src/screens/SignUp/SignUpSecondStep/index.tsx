@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { useTheme } from 'styled-components';
 
 import { 
   KeyboardAvoidingView,
@@ -33,6 +34,7 @@ import {
   Form,
   FormTitle
 } from './styles';
+import { IUser } from '../../../@types/interfaces/IUsers';
 
 interface Params {
   user: {
@@ -54,6 +56,7 @@ export function SignUpSecondStep() {
   type navigationTypes = NativeStackNavigationProp<RootStackParamList, 'SignUpSecondStep'>
   const navigation = useNavigation<navigationTypes>();
 
+  const theme = useTheme();
   const route = useRoute();
   const { user } = route.params as Params;
 
@@ -83,10 +86,8 @@ export function SignUpSecondStep() {
     if(password != passwordConfirm) {
       return Alert.alert('As senhas não são iguais');
     }
-    console.log(user);
-    Alert.alert('Tudo ok ao cadastrar');
 
-    const newUser = {
+    const newUser: IUser = {
       id: String(uuid.v4()),
       name: user.name,
       email: user.email,
@@ -159,6 +160,7 @@ export function SignUpSecondStep() {
 
           <Button 
             title='Cadastrar'
+            color={theme.colors.header}
             onPress={handleSubmit(handleSignUpUser)}
             />
         </Container>

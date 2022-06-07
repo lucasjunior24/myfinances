@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ActivityIndicator } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 import { HighlightCard } from '../../components/HighlightCard';
 import { TransactionCard, TransactionCardProps } from '../../components/TransactionCard';
@@ -25,6 +25,10 @@ import {
   LoadContainer
 } from './styles';
 
+import { RootStackParamList } from '../../routes/RootStackParams';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { IUser } from '../../@types/interfaces/IUsers';
+
 export interface DataListProps extends TransactionCardProps {
   id: string;
 }
@@ -41,9 +45,17 @@ interface HighlightData {
 }
 
 export function Dashboard() {
+  type navigationTypes = NativeStackNavigationProp<RootStackParamList, 'AppRoutes'>
+  const navigation = useNavigation<navigationTypes>();
+
   const [isLoading, setIsLoading] = useState(true);
   const [transactions, setTransactions] = useState<DataListProps[]>([]);
   const [highlightData, setHighlightData] = useState<HighlightData>({} as HighlightData); 
+  const [userLogadoLocal, setUserLogadoLocal] = useState<IUser>({} as IUser);
+  const [avatar, setAvatar] = useState<string>('');
+
+  const dataKey_userLogado = '@gofinances:user_logado';
+  const dataKey = '@gofinances:transactions';
 
   function getLastTransactionDate(
     collection: DataListProps[],
@@ -54,11 +66,32 @@ export function Dashboard() {
       .map(transaction => new Date(transaction.date).getTime())));
   
       return `${lastTransaction.getDate()} de ${lastTransaction.toLocaleString('pt-BR', { month: 'long' })}`;
-
   }
 
   async function loadTransactions() {
-    const dataKey = '@gofinances:transactions';
+    const response_userLogado = await AsyncStorage.getItem(dataKey_userLogado);
+    const userLogadoEmArray = response_userLogado ? JSON.parse(response_userLogado) : {} as IUser;
+
+    const primeiroElemntoDoArray: IUser = userLogadoEmArray[0][0];
+    
+    console.log("teste  : ", primeiroElemntoDoArray);
+
+    if(primeiroElemntoDoArray.avatar === undefined) {
+      const dataKey_userLogadoComAvatar = '@gofinances:user_logadoComAvatar';
+
+      const data = await AsyncStorage.getItem(dataKey_userLogadoComAvatar);
+      const userLogado2ComAvatar = data ? JSON.parse(data) : {} as IUser;
+      const primeiroElemntoComAVATAR: IUser = userLogado2ComAvatar[0];
+      console.log("primeiroElemntoComAVATAR : ", primeiroElemntoComAVATAR);
+      console.log("meu avatar : ", primeiroElemntoComAVATAR.avatar);
+
+      setUserLogadoLocal(primeiroElemntoComAVATAR);
+      setAvatar(primeiroElemntoComAVATAR.avatar !== undefined ? primeiroElemntoComAVATAR.avatar : "https://avatars.githubusercontent.com/u/53240060?v=4");
+    }
+
+    // console.log("Dados do meu Usuario logado: ", primeiroElemntoDoArray);
+    console.log("meu avatar : ", avatar);
+
     const response = await AsyncStorage.getItem(dataKey);
     const transactions = response ? JSON.parse(response) : [];
 
@@ -127,6 +160,10 @@ export function Dashboard() {
     
     setIsLoading(false);
   }
+  async function signOut(){
+    await AsyncStorage.removeItem(dataKey_userLogado);
+    navigation.navigate('SignIn');
+  }
 
   useEffect(() => {
     loadTransactions();
@@ -150,14 +187,15 @@ export function Dashboard() {
         <Header>
           <UserWrapper>
             <UserInfo>
-              <Photo source={{ uri: 'https://avatars.githubusercontent.com/u/53240060?v=4' }} />
+              { avatar ? <Photo source={{ uri: avatar }} /> :  <Photo source={{ uri: 'https://avatars.githubusercontent.com/u/53240060?v=4' }} />}
+             
               <User>
                 <UserGreeting>Ola, </UserGreeting>
-                <UserName>Lucas</UserName>
+                <UserName>{userLogadoLocal.name}</UserName>
               </User>
             </UserInfo>
 
-            <LogoutButton onPress={() => {}}>
+            <LogoutButton onPress={signOut}>
               <Icon name='power' />
             </LogoutButton>
           </UserWrapper>

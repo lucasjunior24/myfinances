@@ -11,6 +11,7 @@ import { SignUpFirstStep } from '../screens/SignUp/SignUpFirstStep';
 import { Resumo } from '../screens/Resumo';
 import { SignIn } from '../screens/SignIn';
 import { Routes } from '.';
+import { Profile } from '../screens/Profile';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -57,8 +58,8 @@ export function AppRoutes() {
       />
 
       <Screen 
-        name="Resumo"
-        component={Resumo}
+        name="Profile"
+        component={Profile}
         options={{
           tabBarIcon: (({ size, color }) => (
             <MaterialIcons 

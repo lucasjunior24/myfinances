@@ -17,6 +17,7 @@ import * as Yup from 'yup';
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
 import { PasswordInput } from '../../components/PasswordInput';
+import { IUser } from '../../@types/interfaces/IUsers';
 
 import theme from '../../global/styles/theme';
 import { RootStackParamList } from '../../routes/RootStackParams';
@@ -38,7 +39,7 @@ export function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const [listaDeUsers, setlistaDeUsers] = useState<any[]>([]);
+  const [listaDeUsers, setlistaDeUsers] = useState<IUser[]>([]);
 
   type navigationTypes = NativeStackNavigationProp<RootStackParamList, 'SignIn'>
   const navigation = useNavigation<navigationTypes>();
@@ -56,7 +57,7 @@ export function SignIn() {
   
       await schema.validate({ email, password });
 
-      signIn(email, password);
+      await signIn(email, password);
 
     } catch (error) {
       if(error instanceof Yup.ValidationError) {
@@ -71,34 +72,43 @@ export function SignIn() {
   }
 
   async function signIn(email: string, password: string) {
-    console.log("Users Cadastrados", listaDeUsers);
-    const userLogado = listaDeUsers.filter(user => user.email === email && user.password === password);
+    if(listaDeUsers!) {
+      console.log("Usúarios Cadastrados", listaDeUsers);
+      const meuUserCadastrado = listaDeUsers.filter(user => user.email === email && user.password === password);
 
-    console.log("Meu user encontrado", userLogado);
+      if(meuUserCadastrado!) {
+        
+        const dataKey = '@gofinances:user_logado';
 
-    if(userLogado!) {
+        AsyncStorage.removeItem(dataKey);
+        
+        const data = await AsyncStorage.getItem(dataKey);
+        const currentData = data ? JSON.parse(data) : [];
 
-      console.log("Novo usuario: ", userLogado);
+        console.log("#############################");
+        console.log("############# EU USER LOGADO ###############", data);
+        console.log("############# EU USER CADASTRADO ###############", meuUserCadastrado);
+        const meuUserCadastradoFormatted = [
+          ...currentData,
+          meuUserCadastrado
+        ];
 
-      const dataKey = '@gofinances:user_logado';
+        await AsyncStorage.setItem(dataKey, JSON.stringify(meuUserCadastradoFormatted));
 
-      const data = await AsyncStorage.getItem(dataKey);
-      const currentData = data ? JSON.parse(data) : [];
-
-      const userLogadoFormatted = [
-        ...currentData,
-        userLogado
-      ];
-
-      await AsyncStorage.setItem(dataKey, JSON.stringify(userLogadoFormatted));
-
-      navigation.navigate('AppRoutes');
+        navigation.navigate('AppRoutes');
+      } else {
+        Alert.alert(
+          'Erro na autenticação', 
+          'Ocorreu um erro ao fazer login, verifique as credenciais'
+        );
+      }
     } else {
       Alert.alert(
-        'Erro na autenticação', 
-        'Ocorreu um erro ao fazer login, verifique as credenciais'
+        'Não á nem um usúarios Cadastrado', 
+        'Crie uma conta para poder logar'
       );
     }
+    
   }
 
   function handleNewAccount() {
