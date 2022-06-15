@@ -86,14 +86,14 @@ export function SignIn() {
         const currentData = data ? JSON.parse(data) : [];
 
         console.log("#############################");
-        console.log("############# EU USER LOGADO ###############", data);
         console.log("############# EU USER CADASTRADO ###############", meuUserCadastrado);
         const meuUserCadastradoFormatted = [
           ...currentData,
           meuUserCadastrado
         ];
-
+        
         await AsyncStorage.setItem(dataKey, JSON.stringify(meuUserCadastradoFormatted));
+        console.log("############# EU USER LOGADO ###############", meuUserCadastradoFormatted);
 
         navigation.navigate('AppRoutes');
       } else {
