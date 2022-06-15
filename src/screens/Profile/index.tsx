@@ -81,7 +81,7 @@ export function Profile() {
       cpf: primeiroElemntoDoArray.cpf,
       password: primeiroElemntoDoArray.password,
       date: primeiroElemntoDoArray.date,
-      avatar: avatar
+      avatar: result.uri
     }
     console.log("Usuario EDITADO: ", newUser);
 
@@ -95,46 +95,53 @@ export function Profile() {
 
       await AsyncStorage.setItem(dataKey_userLogado, JSON.stringify(dataFormatted));
       setUserLogadoLocal(primeiroElemntoDoArray);
+
+      AsyncStorage.removeItem(dataKey_userLogadoComAvatar);
+      await AsyncStorage.setItem(dataKey_userLogadoComAvatar, JSON.stringify(dataFormatted));
+      // setUserLogadoLocal(newUser);
+      
+      const primeiroElemntoDoArrayComAvatar: IUser = dataFormatted[0];
+      console.log("Usuario com avarta local 2: ", primeiroElemntoDoArrayComAvatar);
   }
 
   async function getUserLogado() {
     console.log("Meu AVATAR: ", avatar);
     
-    const response_userLogado = await AsyncStorage.getItem(dataKey_userLogado);
-    const userLogadoEmArray = response_userLogado ? JSON.parse(response_userLogado) : {} as IUser;
+    // const response_userLogado = await AsyncStorage.getItem(dataKey_userLogado);
+    // const userLogadoEmArray = response_userLogado ? JSON.parse(response_userLogado) : {} as IUser;
 
-    console.log("meus users em array: ", userLogadoEmArray);
-    const primeiroElemntoDoArray: IUser = userLogadoEmArray[0][0];
+    // console.log("meus users em array: ", userLogadoEmArray);
+    // const primeiroElemntoDoArray: IUser = userLogadoEmArray[0][0];
 
 
-    const newUser: IUser = {
-      id: primeiroElemntoDoArray.id,
-      name: primeiroElemntoDoArray.name,
-      email: primeiroElemntoDoArray.email,
-      cpf: primeiroElemntoDoArray.cpf,
-      password: primeiroElemntoDoArray.password,
-      date: primeiroElemntoDoArray.date,
-      avatar: avatar
-    }
-    console.log("Usuario EDITADO: ", newUser);
+    // const newUser: IUser = {
+    //   id: primeiroElemntoDoArray.id,
+    //   name: primeiroElemntoDoArray.name,
+    //   email: primeiroElemntoDoArray.email,
+    //   cpf: primeiroElemntoDoArray.cpf,
+    //   password: primeiroElemntoDoArray.password,
+    //   date: primeiroElemntoDoArray.date,
+    //   avatar: avatar
+    // }
+    // console.log("Usuario EDITADO: ", newUser);
 
-    // AsyncStorage.removeItem(dataKey_userLogado);
+    // // AsyncStorage.removeItem(dataKey_userLogado);
 
-    AsyncStorage.removeItem(dataKey_userLogadoComAvatar);
+    // AsyncStorage.removeItem(dataKey_userLogadoComAvatar);
     
-    const data = await AsyncStorage.getItem(dataKey_userLogadoComAvatar);
-    const currentData = data ? JSON.parse(data) : [];
+    // const data = await AsyncStorage.getItem(dataKey_userLogadoComAvatar);
+    // const currentData = data ? JSON.parse(data) : [];
 
-    const dataFormatted = [
-      ...currentData,
-      newUser
-    ];
+    // const dataFormatted = [
+    //   ...currentData,
+    //   newUser
+    // ];
   
-    await AsyncStorage.setItem(dataKey_userLogadoComAvatar, JSON.stringify(dataFormatted));
-    setUserLogadoLocal(newUser);
+    // await AsyncStorage.setItem(dataKey_userLogadoComAvatar, JSON.stringify(dataFormatted));
+    // setUserLogadoLocal(newUser);
     
-    const primeiroElemntoDoArrayComAvatar: IUser = dataFormatted[0];
-    console.log("Usuario com avarta local 2: ", primeiroElemntoDoArrayComAvatar);
+    // const primeiroElemntoDoArrayComAvatar: IUser = dataFormatted[0];
+    // console.log("Usuario com avarta local 2: ", primeiroElemntoDoArrayComAvatar);
   }
   useEffect(() => {
     getUserLogado();

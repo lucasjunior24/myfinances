@@ -56,6 +56,7 @@ export function Dashboard() {
 
   const dataKey_userLogado = '@gofinances:user_logado';
   const dataKey = '@gofinances:transactions';
+  const dataKey_userLogadoComAvatar = '@gofinances:user_logadoComAvatar';
 
   function getLastTransactionDate(
     collection: DataListProps[],
@@ -69,27 +70,41 @@ export function Dashboard() {
   }
 
   async function loadTransactions() {
-    const response_userLogado = await AsyncStorage.getItem(dataKey_userLogado);
-    const userLogadoEmArray = response_userLogado ? JSON.parse(response_userLogado) : {} as IUser;
 
-    const primeiroElemntoDoArray: IUser = userLogadoEmArray[0][0];
-    
-    console.log("teste  : ", primeiroElemntoDoArray);
+    const data_userLogadoComAvatar = await AsyncStorage.getItem(dataKey_userLogadoComAvatar);
+    const currentData = data_userLogadoComAvatar ? JSON.parse(data_userLogadoComAvatar) : {} as IUser;
 
-    if(primeiroElemntoDoArray.avatar === undefined) {
-      const dataKey_userLogadoComAvatar = '@gofinances:user_logadoComAvatar';
+    const primeiroElemntoDoArrayComAvatar: IUser = currentData[1];
+    console.log("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT")
+    console.log("Usuario com avatar local 2: ", primeiroElemntoDoArrayComAvatar);
 
-      const data = await AsyncStorage.getItem(dataKey_userLogadoComAvatar);
-      const userLogado2ComAvatar = data ? JSON.parse(data) : {} as IUser;
-      const primeiroElemntoComAVATAR: IUser = userLogado2ComAvatar[0];
-      console.log("primeiroElemntoComAVATAR : ", primeiroElemntoComAVATAR);
-      console.log("meu avatar : ", primeiroElemntoComAVATAR.avatar);
+    console.log("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT")
 
-      setUserLogadoLocal(primeiroElemntoComAVATAR);
-      setAvatar(primeiroElemntoComAVATAR.avatar !== undefined ? primeiroElemntoComAVATAR.avatar : "https://avatars.githubusercontent.com/u/53240060?v=4");
+
+    if(primeiroElemntoDoArrayComAvatar.avatar !== null) {
+      setUserLogadoLocal(primeiroElemntoDoArrayComAvatar);
+      setAvatar(primeiroElemntoDoArrayComAvatar.avatar);
+    }
+    else {
+      const response_userLogado = await AsyncStorage.getItem(dataKey_userLogado);
+      const userLogadoEmArray = response_userLogado ? JSON.parse(response_userLogado) : {} as IUser;
+  
+      const primeiroElemntoDoArray: IUser = userLogadoEmArray[0][0];
+      
+      console.log("Usuario sem avatar  : ", primeiroElemntoDoArray);
+      // const dataKey_userLogadoComAvatar = '@gofinances:user_logadoComAvatar';
+
+      // const data = await AsyncStorage.getItem(dataKey_userLogadoComAvatar);
+      // const userLogado2ComAvatar = data ? JSON.parse(data) : {} as IUser;
+      // const primeiroElemntoComAVATAR: IUser = userLogado2ComAvatar[0];
+      // console.log("primeiroElemntoComAVATAR : ", primeiroElemntoComAVATAR);
+      // console.log("meu avatar : ", primeiroElemntoComAVATAR.avatar);
+
+      setUserLogadoLocal(primeiroElemntoDoArray);
+      
     }
 
-    // console.log("Dados do meu Usuario logado: ", primeiroElemntoDoArray);
+
     console.log("meu avatar : ", avatar);
 
     const response = await AsyncStorage.getItem(dataKey);
