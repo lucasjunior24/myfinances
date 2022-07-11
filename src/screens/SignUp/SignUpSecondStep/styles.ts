@@ -27,7 +27,7 @@ export const Title = styled.Text`
   font-family: ${({ theme }) => theme.fonts.bold};
   color: ${({ theme }) => theme.colors.title};
   
-  margin-top: 60px;
+  margin-top: ${getStatusBarHeight() + 11}px;
   margin-bottom: 16px;
 `;
 
@@ -39,10 +39,18 @@ export const Subtitle = styled.Text`
   line-height: ${RFValue(25)}px;
 `;
 
+export const FooterForm = styled.View`
+  width: 100%;
+  height: 56%;
+
+  justify-content: space-between;
+`;
+
+
 export const Form = styled.View`
   width: 100%;
-  margin-top: 64px;
-  margin-bottom: 16px;
+  margin-top: ${getStatusBarHeight() + 4}px;
+  margin-bottom: 1px;
 `;
 
 export const FormTitle = styled.Text`

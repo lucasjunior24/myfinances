@@ -25,7 +25,7 @@ export const Header = styled.View`
 export const UserWrapper = styled.View`
     width: 100%;
     padding: 0 24px;
-    margin-top: ${getStatusBarHeight() + RFValue(28)}px;
+    margin-top: ${getStatusBarHeight() + RFValue(18)}px;
 
     justify-content: space-between;
     align-items: center;
@@ -33,7 +33,7 @@ export const UserWrapper = styled.View`
 `;
 
 export const UserInfo = styled.View`
-    align-items: center;
+    align-items: flex-start;
     flex-direction: row;
 `;
 
@@ -41,6 +41,7 @@ export const Photo = styled.Image`
     width: ${RFValue(55)}px;
     height: ${RFValue(55)}px;
 
+    background: ${({ theme }) => theme.colors.shape};
     border-radius: 10px;
 `;
 
@@ -86,10 +87,11 @@ export const Transactions = styled.View`
   flex: 1%;
   padding: 0 24px;
 
-  margin-top: ${RFPercentage(12)}px;
+  margin-top: ${RFPercentage(6)}px;
 `;
 
 export const Title = styled.Text`
+  margin-top: 16px;
   font-size: ${RFValue(18)}px;
   font-family: ${({ theme }) => theme.fonts.regular};
 

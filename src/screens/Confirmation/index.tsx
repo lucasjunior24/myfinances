@@ -3,6 +3,9 @@ import React from 'react';
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useWindowDimensions } from 'react-native';
 
+import { NativeStackNavigationProp} from '@react-navigation/native-stack';
+
+import { RootStackParamList } from '../../routes/RootStackParams';
 import LogoSvg from '../../assets/logo_background_gray.svg';
 import DoneSvg from '../../assets/done.svg';
 
@@ -25,8 +28,9 @@ import { ConfirmButton } from '../../components/ConfirmButton';
 export function Confirmation() {
   const route = useRoute();
   const { width } = useWindowDimensions();
-
-  const navigation = useNavigation();
+  
+  type navigationTypes = NativeStackNavigationProp<RootStackParamList, 'Confirmation'>
+  const navigation = useNavigation<navigationTypes>();;
 
   const { title, message, nextScreenRoute } = route.params as Params;
 
@@ -36,7 +40,6 @@ export function Confirmation() {
 
   return (
     <Container>
-
       <LogoSvg width={width} />
 
       <Content>
@@ -46,11 +49,9 @@ export function Confirmation() {
         <Message>
           {message}
         </Message>
+        <ConfirmButton title='OK' onPress={handleConfirm} />
       </Content>
 
-      <Footer>
-        <ConfirmButton title='OK' onPress={handleConfirm} />
-      </Footer>
     </Container>
   );
 }

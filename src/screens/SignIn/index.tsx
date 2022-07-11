@@ -3,7 +3,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { 
   StatusBar,
-  KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
   Alert
@@ -127,15 +126,15 @@ export function SignIn() {
   }, []) 
   
   return (
-    <KeyboardAvoidingView behavior='position' enabled >
+    // <KeyboardAvoidingView behavior='position' enabled >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <Container>
          <ContainerHeader>
-         <StatusBar 
-            barStyle='dark-content'
-            backgroundColor='transparent'
-            // translucent
-          />
+         <StatusBar
+              barStyle='light-content'
+              translucent
+              backgroundColor='transparent'
+            />
           <Header>
               <Title>
                 Controle suas {'\n'}
@@ -174,11 +173,12 @@ export function SignIn() {
               onPress={handleSignIn}
               enabled={true}
               loading={false}
+              color={theme.colors.header}
               /> 
 
             <Button 
               title='Criar conta Gratuita'
-              color={theme.colors.background_secondary}
+              color={theme.colors.background}
               light
               onPress={handleNewAccount}
               enabled={true}
@@ -188,6 +188,6 @@ export function SignIn() {
           </FooterForm>
         </Container>
       </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+    // {/* </KeyboardAvoidingView> */}
   );
 }

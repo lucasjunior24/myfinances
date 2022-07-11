@@ -13,7 +13,7 @@ export const Container = styled.View`
 export const Header = styled.View`
   width: 100%;
   height: 227px;
-  background-color: ${({ theme }) => theme.colors.header};
+  background-color: ${({ theme }) => theme.colors.primary};
 
   padding: 0 24px;
   align-items: center;
@@ -24,7 +24,7 @@ export const HeaderTop = styled.View`
 
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
 
     margin-top: ${getStatusBarHeight() + 12}px;
 `;
@@ -34,7 +34,7 @@ export const HeaderTitle = styled.Text`
     font-family: ${({ theme }) => theme.fonts.medium};
     color: ${({ theme }) => theme.colors.background_secondary};
 
-    margin-top: 24px;
+    margin-top: 10px;
 `;
 
 export const LogoutButton = styled(BorderlessButton)``;
@@ -57,7 +57,7 @@ export const Photo = styled.Image`
 export const PhotoButton = styled(RectButton)`
   width: 40px;
   height: 40px;
-  background-color: ${({ theme }) => theme.colors.main};
+  background-color: ${({ theme }) => theme.colors.secondary};
 
   justify-content: center;
   align-items: center;
@@ -88,7 +88,7 @@ export const Option = styled.TouchableOpacity<OptionProps>`
   
   ${({ active }) => active && css`
     border-bottom-width: 3px;
-    border-bottom-color: ${({ theme }) => theme.colors.main};
+    border-bottom-color: ${({ theme }) => theme.colors.secondary};
   `};
 `;
 

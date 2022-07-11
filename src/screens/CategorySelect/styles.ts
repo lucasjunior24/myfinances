@@ -13,12 +13,12 @@ export const Container = styled(GestureHandlerRootView)`
 `
 export const Header = styled.View`
   width: 100%;
-  height: ${RFValue(113)}px;
+  height: ${RFValue(100)}px;
   background: ${({ theme }) => theme.colors.primary};
 
-  justify-content:  flex-end;
+  justify-content: center;
   align-items: center;
-  padding-bottom: 19px;
+  padding-bottom: 19px;î
 `;
 
 export const Title = styled.Text`

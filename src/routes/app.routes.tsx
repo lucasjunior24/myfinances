@@ -7,11 +7,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { Dashboard } from '../screens/Dashboard';
 import { Register } from '../screens/Register';
-import { SignUpFirstStep } from '../screens/SignUp/SignUpFirstStep';
+
 import { Resumo } from '../screens/Resumo';
-import { SignIn } from '../screens/SignIn';
-import { Routes } from '.';
-import { Profile } from '../screens/Profile';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -25,7 +22,7 @@ export function AppRoutes() {
         labelPosition: 'beside-icon',
         style: {
           paddingVertical: Platform.OS === 'ios' ? 20 : 0,
-          height: 88
+          height: 60
         }
       }}
     >
@@ -58,8 +55,8 @@ export function AppRoutes() {
       />
 
       <Screen 
-        name="Profile"
-        component={Profile}
+        name="Grafico"
+        component={Resumo}
         options={{
           tabBarIcon: (({ size, color }) => (
             <MaterialIcons 

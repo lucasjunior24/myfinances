@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useCallback } from 'react';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ActivityIndicator } from 'react-native';
+import { useTheme } from 'styled-components';
+import { ActivityIndicator, StatusBar } from 'react-native';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 import { HighlightCard } from '../../components/HighlightCard';
@@ -29,6 +30,10 @@ import { RootStackParamList } from '../../routes/RootStackParams';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { IUser } from '../../@types/interfaces/IUsers';
 
+import { Button } from '../../components/Forms/Button';
+
+
+
 export interface DataListProps extends TransactionCardProps {
   id: string;
 }
@@ -48,6 +53,8 @@ export function Dashboard() {
   type navigationTypes = NativeStackNavigationProp<RootStackParamList, 'AppRoutes'>
   const navigation = useNavigation<navigationTypes>();
 
+  const theme = useTheme()
+
   const [isLoading, setIsLoading] = useState(true);
   const [transactions, setTransactions] = useState<DataListProps[]>([]);
   const [highlightData, setHighlightData] = useState<HighlightData>({} as HighlightData); 
@@ -56,7 +63,7 @@ export function Dashboard() {
 
   const dataKey_userLogado = '@gofinances:user_logado';
   const dataKey = '@gofinances:transactions';
-  const dataKey_userLogadoComAvatar = '@gofinances:user_logadoComAvatar';
+  const dataKey_avatar = '@gofinances:avatar_local';
 
   function getLastTransactionDate(
     collection: DataListProps[],
@@ -65,47 +72,25 @@ export function Dashboard() {
     const lastTransaction = new Date(Math.max.apply(Math, collection
       .filter(transaction => transaction.type === type)
       .map(transaction => new Date(transaction.date).getTime())));
-  
-      return `${lastTransaction.getDate()} de ${lastTransaction.toLocaleString('pt-BR', { month: 'long' })}`;
+      return Number.isNaN(lastTransaction.getDate()) ?  `vazio` : `${lastTransaction.getDate()} de ${lastTransaction.toLocaleString('pt-BR', { month: 'long' })}`;
   }
 
   async function loadTransactions() {
+    const response_userLogado = await AsyncStorage.getItem(dataKey_userLogado);
+    const userLogadoEmArray = response_userLogado ? JSON.parse(response_userLogado) : {} as IUser;
 
-    const data_userLogadoComAvatar = await AsyncStorage.getItem(dataKey_userLogadoComAvatar);
-    const currentData = data_userLogadoComAvatar ? JSON.parse(data_userLogadoComAvatar) : {} as IUser;
+    const primeiroElemntoDoArray: IUser = userLogadoEmArray[0][0];
 
-    const primeiroElemntoDoArrayComAvatar: IUser = currentData[1];
-    console.log("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT")
-    console.log("Usuario com avatar local 2: ", primeiroElemntoDoArrayComAvatar);
+    setUserLogadoLocal(primeiroElemntoDoArray);
 
-    console.log("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT")
+    const response_avatarLocal = await AsyncStorage.getItem(dataKey_avatar);
+    const avatarLocal = response_avatarLocal ? JSON.parse(response_avatarLocal) : String;
+    console.log("Avatar local : ", avatarLocal);
 
-
-    if(primeiroElemntoDoArrayComAvatar.avatar !== null) {
-      setUserLogadoLocal(primeiroElemntoDoArrayComAvatar);
-      setAvatar(primeiroElemntoDoArrayComAvatar.avatar);
+    if(avatarLocal !== null) {
+      console.log("meu avatar local: ", avatarLocal);
+      setAvatar(avatarLocal);
     }
-    else {
-      const response_userLogado = await AsyncStorage.getItem(dataKey_userLogado);
-      const userLogadoEmArray = response_userLogado ? JSON.parse(response_userLogado) : {} as IUser;
-  
-      const primeiroElemntoDoArray: IUser = userLogadoEmArray[0][0];
-      
-      console.log("Usuario sem avatar  : ", primeiroElemntoDoArray);
-      // const dataKey_userLogadoComAvatar = '@gofinances:user_logadoComAvatar';
-
-      // const data = await AsyncStorage.getItem(dataKey_userLogadoComAvatar);
-      // const userLogado2ComAvatar = data ? JSON.parse(data) : {} as IUser;
-      // const primeiroElemntoComAVATAR: IUser = userLogado2ComAvatar[0];
-      // console.log("primeiroElemntoComAVATAR : ", primeiroElemntoComAVATAR);
-      // console.log("meu avatar : ", primeiroElemntoComAVATAR.avatar);
-
-      setUserLogadoLocal(primeiroElemntoDoArray);
-      
-    }
-
-
-    console.log("meu avatar : ", avatar);
 
     const response = await AsyncStorage.getItem(dataKey);
     const transactions = response ? JSON.parse(response) : [];
@@ -115,8 +100,10 @@ export function Dashboard() {
 
     const transactionsFormatted: DataListProps[] = transactions
     .map((item: DataListProps) => {
-      if(item.type === 'positive') {
+      if(item.type === 'positive'){
         entriesTotal += Number(item.amount);
+      } else {
+        expensiveTotal += Number(item.amount);
       }
 
       const amount = Number(item.amount)
@@ -155,14 +142,14 @@ export function Dashboard() {
           style: 'currency',
           currency: 'BRL'
         }),
-        lastTransaction: `Última entrada dia ${lastTransactionEntries}`
+        lastTransaction: lastTransactionEntries !== 'vazio' ? `Última entrada dia ${lastTransactionEntries}` : `Nenhuma entrada disponivel`
       },
       expensives: {
         amount: expensiveTotal.toLocaleString('pt-BR', {
           style: 'currency',
           currency: 'BRL'
         }),
-        lastTransaction: `Última saida dia ${lastTransactionExpensives}` 
+        lastTransaction: lastTransactionExpensives !== 'vazio' ? `Última saida dia ${lastTransactionExpensives}` : `Nenhuma saida disponivel`
       },
       total: {
         amount: total.toLocaleString('pt-BR', {
@@ -180,8 +167,12 @@ export function Dashboard() {
     navigation.navigate('SignIn');
   }
 
+  function MeuPerfil(){
+    navigation.navigate('Profile');
+  }
+  
   useEffect(() => {
-    loadTransactions();
+   loadTransactions();
 
     // const dataKey = '@gofinances:transactions';
     // AsyncStorage.removeItem(dataKey);
@@ -193,6 +184,11 @@ export function Dashboard() {
 
   return (
     <Container>
+       <StatusBar
+              barStyle='light-content'
+              translucent
+              backgroundColor='transparent'
+            />
       { 
       isLoading ? 
       <LoadContainer>
@@ -202,7 +198,7 @@ export function Dashboard() {
         <Header>
           <UserWrapper>
             <UserInfo>
-              { avatar ? <Photo source={{ uri: avatar }} /> :  <Photo source={{ uri: 'https://avatars.githubusercontent.com/u/53240060?v=4' }} />}
+              { avatar ? <Photo source={{ uri: avatar }} /> :  <Photo source={require('../../assets/userNaoAtivo.png')} />}
              
               <User>
                 <UserGreeting>Ola, </UserGreeting>
@@ -215,26 +211,29 @@ export function Dashboard() {
             </LogoutButton>
           </UserWrapper>
         </Header>
-
+      
         <HighlightCards>
           <HighlightCard 
             type='up'
             title="Entradas" 
             amount={highlightData.entries.amount}
-            lastTransactioin={highlightData.entries.lastTransaction} />
+            lastTransaction={highlightData.entries.lastTransaction} />
           <HighlightCard
             type='down'
             title="Saida" 
             amount={highlightData.expensives.amount}
-            lastTransactioin={highlightData.expensives.lastTransaction} />
+            lastTransaction={highlightData.expensives.lastTransaction} />
           <HighlightCard 
             type='total'
             title="Total" 
             amount={highlightData.total.amount}
-            lastTransactioin={highlightData.total.lastTransaction} />
+            lastTransaction={highlightData.total.lastTransaction} />
         </HighlightCards>
 
+
         <Transactions>
+        <Button title='Editar Perfil' onPress={MeuPerfil} color={theme.colors.secondary} />
+
           <Title>Listagem</Title>
 
           <TransactionList

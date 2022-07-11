@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import { NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 import { 
+  StatusBar,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
@@ -24,8 +25,10 @@ import {
   Title,
   Subtitle,
   Form,
-  FormTitle
+  FormTitle,
+  FooterForm
 } from './styles';
+import { IUser } from '../../../@types/interfaces/IUsers';
 // import { useAuth } from '../../../hooks/auth';
 
 export function SignUpFirstStep() {
@@ -52,7 +55,7 @@ export function SignUpFirstStep() {
           .required('Nome é obrigatorio'),
       });
 
-      const data = { name, email, cpf }
+      const data : IUser = { name, email, cpf }
       await schema.validate(data);
 
       navigation.navigate('SignUpSecondStep', { user: data });
@@ -66,7 +69,12 @@ export function SignUpFirstStep() {
     <KeyboardAvoidingView behavior='position' enabled>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <Container>
-
+        <StatusBar
+              barStyle='dark-content'
+              // barStyle='light-content'
+              translucent
+              backgroundColor='transparent'
+            />
           <Header>
             <BackButton onPress={handleBack} />
             <Steps>
@@ -83,37 +91,39 @@ export function SignUpFirstStep() {
             forma rápida e fácil
           </Subtitle>
 
-          <Form>
-            <FormTitle>1. Dados</FormTitle>
-            <Input 
-              iconName='user' 
-              placeholder='Nome' 
-              onChangeText={setName}
-              value={name}
-            />
-            <Input 
-              iconName='mail' 
-              placeholder='E-mail' 
-              keyboardType='email-address'
-              onChangeText={setEmail}
-              value={email}
-            />
-            <Input 
-              iconName='credit-card' 
-              placeholder='CPF'
-              keyboardType='numeric' 
-              onChangeText={setCpf}
-              value={cpf}
-            />
-          </Form>
+          <FooterForm>
+            <Form>
+              <FormTitle>1. Dados</FormTitle>
+              <Input 
+                iconName='user' 
+                placeholder='Nome' 
+                onChangeText={setName}
+                value={name}
+              />
+              <Input 
+                iconName='mail' 
+                placeholder='E-mail' 
+                keyboardType='email-address'
+                onChangeText={setEmail}
+                value={email}
+              />
+              <Input 
+                iconName='credit-card' 
+                placeholder='CPF'
+                keyboardType='numeric' 
+                onChangeText={setCpf}
+                value={cpf}
+              />
+            </Form>
 
-          <Button 
-            title='Proximo'
-            onPress={handleNextStep}
-          />
+            <Button 
+              title='Proximo'
+              onPress={handleNextStep}
+            />
+          </FooterForm>
 
         </Container>
       </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
-  )
+   </KeyboardAvoidingView>
+  );
 }

@@ -13,12 +13,14 @@ import uuid from 'react-native-uuid';
 
 import { useForm } from 'react-hook-form';
 import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 import { Button } from '../../components/Forms/Button';
 import { TransactionTypeButton } from '../../components/Forms/TransactionTypeButton';
 import { CategorySelect } from '../CategorySelect';
 import { CategorySelectButton } from '../../components/Forms/CategorySelectButton';
 import { InputForm } from '../../components/Forms/InputForm';
+import { RootStackParamList } from '../../routes/RootStackParams';
 
 import {
   Container,
@@ -52,7 +54,8 @@ export function Register() {
     name: 'Categoria'
   });
 
-  const navigation = useNavigation();
+  type navigationTypes = NativeStackNavigationProp<RootStackParamList, 'SignIn'>
+  const navigation = useNavigation<navigationTypes>();
   const {
     control,
     handleSubmit,
@@ -108,7 +111,7 @@ export function Register() {
         name: 'Categoria'
       });
 
-      navigation.navigate('Listagem');
+      navigation.navigate('AppRoutes');
 
     } catch (error) {
       console.log(error);
@@ -144,13 +147,13 @@ export function Register() {
             <TransactionTypes>
               <TransactionTypeButton
                 type='up'
-                title='Income'
+                title='Entrada'
                 onPress={() => handleTransactionTypeSelect('positive')}
                 isActive={transactionType === 'positive'}
               />
               <TransactionTypeButton
                 type='down'
-                title='Outcome'
+                title='Saída'
                 onPress={() => handleTransactionTypeSelect('negative')}
                 isActive={transactionType === 'negative'}
               />

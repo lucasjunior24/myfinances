@@ -10,6 +10,7 @@ interface Props extends RectButtonProps {
     color?: string;
     loading?: boolean; 
     light?: boolean;
+    onPress: () => void;
 }
 
 export function Button({
@@ -23,7 +24,7 @@ export function Button({
     const theme = useTheme();
     return (
         <Container 
-            color={color ? color : theme.colors.header} 
+            color={color ? color : theme.colors.secondary} 
             onPress={onPress}
             enabled={enabled}
             style={{ opacity: (enabled === false || loading === true) ? .5 : 1 }}

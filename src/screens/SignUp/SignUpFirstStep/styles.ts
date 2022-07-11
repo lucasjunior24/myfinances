@@ -5,7 +5,7 @@ import styled from "styled-components/native";
 export const Container = styled.View`
   padding: 0 24px 14px;
 
-  background-color: ${({ theme }) => theme.colors.background};
+  background-color: ${({ theme }) => theme.colors.background_primary};
 `;
 
 export const Header = styled.View`
@@ -27,8 +27,7 @@ export const Title = styled.Text`
   font-family: ${({ theme }) => theme.fonts.bold};
   color: ${({ theme }) => theme.colors.title};
   
-  margin-top: 40px;
-  margin-bottom: 16px;
+  margin-top:  ${getStatusBarHeight() + 4}px;
 `;
 
 export const Subtitle = styled.Text`
@@ -39,10 +38,17 @@ export const Subtitle = styled.Text`
   line-height: ${RFValue(25)}px;
 `;
 
+export const FooterForm = styled.View`
+  width: 100%;
+  height: 62%;
+
+  justify-content: space-between;
+`;
+
 export const Form = styled.View`
   width: 100%;
-  margin-top: 64px;
-  margin-bottom: 16px;
+  margin-top: ${getStatusBarHeight() + 4}px;
+  margin-bottom: 6px;
 `;
 
 export const FormTitle = styled.Text`

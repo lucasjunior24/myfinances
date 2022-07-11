@@ -19,7 +19,7 @@ import { useForm } from 'react-hook-form';
 
 import { BackButton } from '../../../components/BackButton';
 import { Bullet } from '../../../components/Bullet';
-import { Button } from '../../../components/Forms/Button';
+import { Button } from '../../../components/Button';
 import { PasswordInput } from '../../../components/PasswordInput';
 // import api  from '../../../services/api';
 
@@ -32,7 +32,8 @@ import {
   Title,
   Subtitle,
   Form,
-  FormTitle
+  FormTitle,
+  FooterForm
 } from './styles';
 import { IUser } from '../../../@types/interfaces/IUsers';
 
@@ -56,7 +57,7 @@ export function SignUpSecondStep() {
   type navigationTypes = NativeStackNavigationProp<RootStackParamList, 'SignUpSecondStep'>
   const navigation = useNavigation<navigationTypes>();
 
-  const theme = useTheme();
+
   const route = useRoute();
   const { user } = route.params as Params;
 
@@ -142,6 +143,8 @@ export function SignUpSecondStep() {
             forma rápida e fácil
           </Subtitle>
 
+
+          <FooterForm>
           <Form>
             <FormTitle>2. Senha</FormTitle>
             <PasswordInput 
@@ -160,9 +163,9 @@ export function SignUpSecondStep() {
 
           <Button 
             title='Cadastrar'
-            color={theme.colors.header}
             onPress={handleSubmit(handleSignUpUser)}
             />
+            </FooterForm>
         </Container>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>

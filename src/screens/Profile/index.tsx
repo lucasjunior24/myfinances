@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme } from 'styled-components';
 import { useNavigation } from '@react-navigation/core';
-import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+
 import { Feather } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { RootStackParamList } from '../../routes/RootStackParams';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import {
   StatusBar,
@@ -47,9 +49,10 @@ export function Profile() {
   const [userLogadoLocal, setUserLogadoLocal] = useState<IUser>({} as IUser);
 
   const dataKey_userLogado = '@gofinances:user_logado';
-  const dataKey_userLogadoComAvatar = '@gofinances:user_logadoComAvatar';
+  const dataKey_avatar = '@gofinances:avatar_local';
   const theme = useTheme();
-  const navigation = useNavigation();
+  type navigationTypes = NativeStackNavigationProp<RootStackParamList, 'Profile'>
+  const navigation = useNavigation<navigationTypes>();
 
   function handleBack() {
     navigation.goBack();
@@ -73,7 +76,6 @@ export function Profile() {
     console.log("meus users em array: ", userLogadoEmArray);
     const primeiroElemntoDoArray: IUser = userLogadoEmArray[0][0];
 
-
     const newUser: IUser = {
       id: primeiroElemntoDoArray.id,
       name: primeiroElemntoDoArray.name,
@@ -96,55 +98,25 @@ export function Profile() {
       await AsyncStorage.setItem(dataKey_userLogado, JSON.stringify(dataFormatted));
       setUserLogadoLocal(primeiroElemntoDoArray);
 
-      AsyncStorage.removeItem(dataKey_userLogadoComAvatar);
-      await AsyncStorage.setItem(dataKey_userLogadoComAvatar, JSON.stringify(dataFormatted));
+      AsyncStorage.removeItem(dataKey_avatar);
+      await AsyncStorage.setItem(dataKey_avatar, JSON.stringify(result.uri));
       // setUserLogadoLocal(newUser);
       
       const primeiroElemntoDoArrayComAvatar: IUser = dataFormatted[0];
       console.log("Usuario com avarta local 2: ", primeiroElemntoDoArrayComAvatar);
   }
 
-  async function getUserLogado() {
-    console.log("Meu AVATAR: ", avatar);
-    
-    // const response_userLogado = await AsyncStorage.getItem(dataKey_userLogado);
-    // const userLogadoEmArray = response_userLogado ? JSON.parse(response_userLogado) : {} as IUser;
+  async function ObterAvatarLocal() {
+    const response_avatarLocal = await AsyncStorage.getItem(dataKey_avatar);
+    const avatarLocal = response_avatarLocal ? JSON.parse(response_avatarLocal) : String;
+    console.log("Avatar local : ", avatarLocal);
 
-    // console.log("meus users em array: ", userLogadoEmArray);
-    // const primeiroElemntoDoArray: IUser = userLogadoEmArray[0][0];
-
-
-    // const newUser: IUser = {
-    //   id: primeiroElemntoDoArray.id,
-    //   name: primeiroElemntoDoArray.name,
-    //   email: primeiroElemntoDoArray.email,
-    //   cpf: primeiroElemntoDoArray.cpf,
-    //   password: primeiroElemntoDoArray.password,
-    //   date: primeiroElemntoDoArray.date,
-    //   avatar: avatar
-    // }
-    // console.log("Usuario EDITADO: ", newUser);
-
-    // // AsyncStorage.removeItem(dataKey_userLogado);
-
-    // AsyncStorage.removeItem(dataKey_userLogadoComAvatar);
-    
-    // const data = await AsyncStorage.getItem(dataKey_userLogadoComAvatar);
-    // const currentData = data ? JSON.parse(data) : [];
-
-    // const dataFormatted = [
-    //   ...currentData,
-    //   newUser
-    // ];
-  
-    // await AsyncStorage.setItem(dataKey_userLogadoComAvatar, JSON.stringify(dataFormatted));
-    // setUserLogadoLocal(newUser);
-    
-    // const primeiroElemntoDoArrayComAvatar: IUser = dataFormatted[0];
-    // console.log("Usuario com avarta local 2: ", primeiroElemntoDoArrayComAvatar);
+    if(avatarLocal !== null) {
+      setAvatar(avatarLocal);
+    }
   }
   useEffect(() => {
-    getUserLogado();
+    ObterAvatarLocal();
 
     // const dataKey = '@gofinances:transactions';
     // AsyncStorage.removeItem(dataKey);
@@ -192,7 +164,7 @@ export function Profile() {
             </PhotoContainer>
           </Header>
 
-          <Content style={{ marginBottom: useBottomTabBarHeight() }}>
+          <Content >
             <Options>
               <Option
                 active={option === 'dataEdit'}
