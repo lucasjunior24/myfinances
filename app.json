@@ -6,6 +6,10 @@
     "slug": "gofinances",
     "scheme": "gofinances",
     "version": "1.0.0",
+    "splash": {
+      "image": "./assets/splash.png",
+      "backgroundColor": "#5636D3"
+    },
     "icon": "./assets/icon.png",
     "plugins": [
       [

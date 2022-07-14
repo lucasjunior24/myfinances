@@ -8,17 +8,17 @@ import { Profile } from '../screens/Profile';
 import { Confirmation } from '../screens/Confirmation';
 import { AppRoutes } from './app.routes';
 
-
-// import { Confirmation } from '../screens/Confirmation';
+import { Splash } from '../screens/Splash';
 
 export const Routes = () => {
     const Stack = createNativeStackNavigator();
 
     return (
         <Stack.Navigator
-            initialRouteName='SignIn'
+            initialRouteName='Splash'
            screenOptions={{headerShown: false}}
         >
+          <Stack.Screen name="Splash" component={Splash} />
           <Stack.Screen name="SignUpFirstStep" component={SignUpFirstStep} />
           <Stack.Screen name="SignIn" component={SignIn} />
           <Stack.Screen name="SignUpSecondStep" component={SignUpSecondStep} />

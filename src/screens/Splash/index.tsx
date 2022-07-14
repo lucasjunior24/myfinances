@@ -1,5 +1,9 @@
 import React, { useEffect } from 'react';
-import { useNavigation } from '@react-navigation/core';
+
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp} from '@react-navigation/native-stack';
+
+import { RootStackParamList } from '../../routes/RootStackParams';
 
 import BrandSvg from '../../assets/brand.svg';
 import LogoSvg from '../../assets/logo.svg';
@@ -20,7 +24,9 @@ import {
 export function Splash(){  
   const splashAnimation = useSharedValue(0);
 
-  const navigation = useNavigation();
+  type navigationTypes = NativeStackNavigationProp<RootStackParamList, 'Splash'>
+  const navigation = useNavigation<navigationTypes>();
+
 
   const brandStyle = useAnimatedStyle(() => {
     return {

@@ -13,8 +13,7 @@ import {
   Container,
   Content,
   Title,
-  Message,
-  Footer
+  Message
 } from './styles';
 
 interface Params {

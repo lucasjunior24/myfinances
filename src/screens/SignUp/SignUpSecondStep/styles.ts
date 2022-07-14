@@ -5,7 +5,7 @@ import styled from "styled-components/native";
 export const Container = styled.View`
   padding: 0 24px;
 
-  background-color: ${({ theme }) => theme.colors.background_primary};
+  background-color: ${({ theme }) => theme.colors.background};
 `;
 
 export const Header = styled.View`

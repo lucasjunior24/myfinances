@@ -6,5 +6,6 @@ export type RootStackParamList = {
     SignUpSecondStep: { user: IUser },
     Confirmation: { nextScreenRoute: string, title: string, message: string }
     Profile: undefined,
-    AppRoutes: undefined
+    AppRoutes: undefined,
+    Splash: undefined
 }

@@ -67,6 +67,6 @@ export const Footer = styled.View`
   justify-content: space-between;
   padding-bottom: 10px;
   bottom: auto;
-  /* background-color: ${({ theme }) => theme.colors.background_primary}; */
+  /* background-color: ${({ theme }) => theme.colors.background}; */
 `;
 

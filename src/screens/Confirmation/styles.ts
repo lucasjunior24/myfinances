@@ -4,13 +4,12 @@ import styled from "styled-components/native";
 
 export const Container = styled.ScrollView`
     flex: 1;
-    background-color: ${({ theme }) => theme.colors.header};
+    background-color: ${({ theme }) => theme.colors.primary};
 
     padding-top: 96px;
 `;
 
 export const Content = styled.View`
-
     justify-content: center;
     align-items: center;
 
@@ -22,7 +21,7 @@ export const Title = styled.Text`
     font-family: ${({ theme }) => theme.fonts.medium};
     color: ${({ theme }) => theme.colors.shape};
 
-    margin-top: 24px;
+    margin-top: 20px;
 `;
 
 
@@ -33,5 +32,6 @@ export const Message = styled.Text`
     text-align: center;
     line-height: ${RFValue(25)}px;
     
-    margin-top: 16px;
+    margin-top: 10px;
+    margin-bottom: 6px;
 `;
