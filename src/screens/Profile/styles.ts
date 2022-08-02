@@ -8,7 +8,7 @@ interface OptionProps {
 }
 
 export const Container = styled.View`
-  background-color: ${({ theme }) => theme.colors.background_primary};
+  background-color: ${({ theme }) => theme.colors.background};
 `;
 export const Header = styled.View`
   width: 100%;
@@ -45,7 +45,7 @@ export const PhotoContainer = styled.View`
   border-radius: 90px;
 
   background-color: ${({ theme }) => theme.colors.shape};
-  margin-top: 48px;
+  margin-top: 40px;
 `;
 
 export const Photo = styled.Image`
@@ -70,12 +70,12 @@ export const PhotoButton = styled(RectButton)`
 export const Content = styled.View`
   padding: 0 24px;
 
-  margin-top: 122px;
+  margin-top: 100px;
 `;
 
 export const Options = styled.View`
   border-bottom-width: 1px;
-  border-bottom-color: ${({ theme }) => theme.colors.line};
+  border-bottom-color: ${({ theme }) => theme.colors.secondary};
 
   flex-direction: row;
   justify-content: space-around;
