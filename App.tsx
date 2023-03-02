@@ -14,9 +14,9 @@ import {
 } from '@expo-google-fonts/poppins';
 
 import theme from './src/global/styles/theme';
-
+import {ActivityIndicator } from 'react-native';
 import { AppRoutes } from './src/routes/app.routes';
-
+import { SignIn } from './src/screens/SignIn';
 import { NavigationContainer } from '@react-navigation/native';
 import { Routes } from './src/routes';
 
@@ -28,13 +28,13 @@ export default function App() {
   });
 
   if(!fontsLoaded) {
-    return <AppLoading />
+    return <ActivityIndicator />
   }
 
   return (
     <ThemeProvider theme={theme}>
       <NavigationContainer>
-        <Routes />
+        <SignIn />
       </NavigationContainer>
     </ThemeProvider>
   );

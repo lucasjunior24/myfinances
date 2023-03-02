@@ -2,7 +2,7 @@ import React from 'react';
 import { Platform } from 'react-native';
 import { useTheme} from 'styled-components';
 import { MaterialIcons }from '@expo/vector-icons';
-
+import {NavigationContainer} from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { Dashboard } from '../screens/Dashboard';
@@ -15,7 +15,10 @@ const { Navigator, Screen } = createBottomTabNavigator();
 export function AppRoutes() {
   const theme = useTheme()
   return (
+    <NavigationContainer>
     <Navigator
+      initialRouteName='Listagem'
+      
       tabBarOptions={{
         activeTintColor: theme.colors.secondary,
         inactiveTintColor: theme.colors.text,
@@ -68,5 +71,6 @@ export function AppRoutes() {
         }}
       />
     </Navigator>
+    </NavigationContainer>
   );
 }
